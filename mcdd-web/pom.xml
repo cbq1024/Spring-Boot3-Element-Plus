@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>dev.mcdd</groupId>
+        <artifactId>Spring-Boot3-Element-Plus</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>mcdd-web</artifactId>
+
+    <dependencies>
+        <!-- SpringBoot Web容器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- Sa-Token模块和系统管理模块 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-system</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- 定时任务 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-job</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- 代码生成器 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-generator</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- 监控模块 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-monitor</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- 指定打包名字 -->
+        <finalName>mcdd-admin</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>

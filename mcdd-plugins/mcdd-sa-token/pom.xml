@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>dev.mcdd</groupId>
+        <artifactId>mcdd-plugins</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>mcdd-sa-token</artifactId>
+
+    <dependencies>
+        <!-- 全局公共模块 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- MyBatisPlus模块 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-mybatis-plus</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- Aop依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!-- Sa-Token 权限认证 start -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+        </dependency>
+        <!-- Sa-Token 整合 Redis[使用 jackson 序列化方式] -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-redis-jackson</artifactId>
+        </dependency>
+        <!-- 注意：无论使用哪种序列化方式，你都必须为项目提供一个 Redis 实例化方案 -->
+        <!-- 提供Redis连接池[Sa-Token] -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <!-- Sa-Token 整合 SpringAOP 实现注解鉴权 -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-aop</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>dev.mcdd</groupId>
+        <artifactId>mcdd-plugins</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>mcdd-job</artifactId>
+
+    <dependencies>
+        <!-- 全局公共模块 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- MyBatisPlus模块 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-mybatis-plus</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- 数据统一返回、全局异常以及限流、数据脱敏、重复提交等插件 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-resultex</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
+</project>

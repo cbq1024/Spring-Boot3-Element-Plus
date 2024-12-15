@@ -1,0 +1,69 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      # 连接池名字
+      pool-name: KOI-HIKAIR-PROD
+      # 最大连接池数量
+      maximum-pool-size: 20
+      # 最小空闲线程数量
+      minimum-idle: 10
+      # 配置获取连接等待超时的时间
+      connectionTimeout: 30000
+      # 校验超时时间
+      validationTimeout: 5000
+      # 空闲连接存活最大时间，默认10分钟
+      idleTimeout: 600000
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
+      maxLifetime: 1800000
+      # 连接测试query[配置检测连接是否有效]
+      connectionTestQuery: SELECT 1
+      # 多久检查一次连接的活性
+      keepaliveTime: 30000
+    dynamic:
+      # 性能分析插件[有性能损耗，不建议生产环境使用]
+      p6spy: false
+      # 默认数据源[master]
+      primary: master
+      # 严格匹配数据源，默认false. true未匹配到指定数据源时抛异常，false使用默认数据源
+      strict: false
+      datasource:
+        # 主库数据源
+        master: # 没有@DS，默认数据源
+          type: ${spring.datasource.type}
+          url: jdbc:mysql://39.107.143.109:3306/koi-admin?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=utf-8&useSSL=false&rewriteBatchedStatements=true
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: koi_admin123...
+        # 从库数据源
+        slave: # @DS("dsName")，dsName可以为组名也可以为具体某个库的名称，使用多数据源遵循格式，注解都在mapper层使用。
+          lazy: true
+          type: ${spring.datasource.type}
+          url: jdbc:mysql://localhost:3306/koi-uniapp?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=utf-8&useSSL=false&rewriteBatchedStatements=true
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: admin
+  # redis配置
+  data:
+    redis:
+      # 地址
+      host: 39.107.143.109
+      # 端口，默认为6379
+      port: 6379
+      # 数据库索引
+      database: 0
+      # 密码[若没有密码请注释掉，若有账号密码：则 账号:密码]
+      # password:
+      # 连接超时时间
+      timeout: 10s
+      # 是否开启ssl
+      ssl.enabled: false
+
+# 项目配置
+koi:
+  # 名称
+  projectName: KOI-ADMIN-PROD
+  # 版本
+  projectVersion: 1.0.0
+  # 文件路径 示例[Windows配置D:/KoiFile，Linux配置 /usr/local/KoiFile]
+  filePath: /usr/local/KoiFile

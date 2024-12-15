@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>dev.mcdd</groupId>
+        <artifactId>mcdd-plugins</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>mcdd-resultex</artifactId>
+
+    <dependencies>
+        <!-- Model模块 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-model</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- MyBatisPlus模块[可删除，mcdd-dict插件已经依赖] -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-mybatis-plus</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- 数据字典翻译 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-dict</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- 限流（工具类模块已包含里面，其他插件都使用） -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-limit</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- 重复提交插件-->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-repect</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- EasyExcel插件 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-easyexcel</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- 日志（里面包含mcdd-mybatis-plus模块，mcdd-mybatis-plus模块包含mcdd-model模块）-->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-logs</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- 常用注解：例如：部门数据权限注解 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-annotation</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- Sa-Token 权限认证，用来处理全局拦截sa-token异常使用，在线文档：https://sa-token.cc -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

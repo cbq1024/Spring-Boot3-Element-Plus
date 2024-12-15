@@ -1,0 +1,21 @@
+services:
+  sa-token-mysql8_3306:
+    image: mysql:8.0
+    container_name: sa-token-mysql8_3306
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "db"
+    volumes:
+      - sa-token-mysql-data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
+
+  sa-token-redis_6379:
+    image: redis
+    container_name: sa-token-redis_6379
+    ports:
+      - "6379:6379"
+
+volumes:
+  sa-token-mysql-data:

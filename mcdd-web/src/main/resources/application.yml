@@ -1,0 +1,150 @@
+server:
+  port: ${port:8088}
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # Tomcat默认限制文件上传的大小是2MB ，超过就不会被捕获，需要调整大一点或者-1不限制
+    max-swallow-size: -1
+    # 不限制POST提交请求的数据大小，默认是2MB
+    max-http-form-post-size: -1
+    # 连接数满后的排队数，默认为100
+    accept-count: 1000
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 800
+      # Tomcat启动初始化的线程数，默认值10
+      min-spare: 100
+  # 开启GZIP压缩，利于你静态资源传输，提升网站请求响应速度
+  compression:
+    enabled: true
+    min-response-size: 1024
+  # 默认是8k
+  max-http-request-header-size: 80KB
+spring:
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+  profiles:
+    active: dev
+  # 解决时间的保存及显示错误问题[实体中就无需再额外注解]
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    locale: zh_CN
+    # 解决java中时间是对的，序列化后到前端差8小时
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  mvc:
+    # 解决时间的保存及显示错误问题[实体中就无需再额外注解]
+    format:
+      date: yyyy-MM-dd HH:mm:ss
+    # 解决Sa-Token springboot3.x 出现 No more pattern data allowed after {*...} or ** pattern element
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  main: # SpringBootv2.6.3中，做了循环应用的检查，默认情况下，如果类中存在有循环引用的情况，就会报上面的错误
+    allow-circular-references: true
+  application:
+    name: koi-web
+  servlet:
+    multipart:
+      enabled: true
+      # 是单个文件大小 默认1M 10KB
+      max-file-size: 10MB
+      # 是设置总上传的数据大小
+      max-request-size: 20MB
+  freemarker:
+    # 指定HttpServletRequest的属性是否可以覆盖controller的model的同名项
+    allow-request-override: false
+    # req访问request
+    request-context-attribute: request
+    # 后缀名freemarker默认后缀为.ftl，当然你也可以改成自己习惯的.html
+    suffix: .html
+    # 设置响应的内容类型
+    content-type: text/html;charset=utf-8
+    # 是否允许mvc使用freemarker
+    enabled: true
+    # 是否开启template caching
+    cache: false
+    # 检查模板位置是否存在
+    check-template-location: true
+    # 设定模板的加载路径，多个以逗号分隔，默认: [“classpath:/templates/”]
+    template-loader-path: classpath:/templates/,classpath:/templates/**/
+    # 设定Template的编码
+    charset: UTF-8
+    settings:
+      template_update_delay: 0 # 检查模板更新延迟时间，设置为0表示立即检查，如果时间大于0会有缓存不方便进行模板测试
+      tag_syntax: auto_detect
+      default_encoding: UTF-8
+      output_encoding: UTF-8
+      locale: zh_CN
+      date_format: yyyy-MM-dd
+      time_format: HH:mm:ss
+      boolean_format: true,false
+      whitespace_stripping: true
+      url_escaping_charset: UTF-8
+      datetime_format: yyyy/MM/dd HH:mm:ss
+      number_format: 0.##
+      classic_compatible: true
+      # ignore,debug,html_debug,rethrow
+      template_exception_handler: rethrow
+    prefer-file-system-access: false
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml,mapper/*.xml
+  configuration:
+    # MybatisPlus配置中设置将sql日志和结果集输出到控制台，会有性能损耗 org.apache.ibatis.logging.stdout.StdOutImpl
+    # 关闭日志记录[单纯使用 p6spy 分析] org.apache.ibatis.logging.nologging.NoLoggingImpl
+    # 默认日志输出 org.apache.ibatis.logging.slf4j.Slf4jImpl
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    # 是否打印 Logo banner
+    banner: true
+    dbConfig:
+      # 主键类型
+      # AUTO[自增] NONE[空] INPUT[用户输入] ASSIGN_ID[雪花] ASSIGN_UUID[唯一] UUID[UUID]
+      idType: ASSIGN_ID
+      # 逻辑已删除值[框架表均使用此值 禁止随意修改]
+      logicDeleteValue: 0
+      # 逻辑未删除值
+      logicNotDeleteValue: 1
+      insertStrategy: NOT_NULL
+      updateStrategy: NOT_NULL
+      whereStrategy: NOT_NULL
+############## Sa-Token 配置 [文档: https://sa-token.cc] ##############
+# 1、被顶下线旧的token为何还存在？ 如果还是用旧token来请求，就会返回你已被顶下线
+# 2、前后端分离模式记录的sa-session存在哪个地方？ 会存在Redis中
+# 3、前后端分离模式，退出时，前后端模式获取到token的值只从前端传递过来headers中拿（yml中进行配置的，如下方所示）
+# 然后StpUtil.logout();自动根据Headers的Authorization获取值，进行从redis中删除token
+# 是否尝试从header里读取token，Header用来获取客户端使用的操作系统和浏览器名称和版本和token，前端将token怎么存储的需要跟yml下方中配置的保持一致
+# is-read-header: true
+# 是否尝试从cookie里读取token
+# is-read-cookie: false
+# 是否尝试从请求体里读取token
+# is-read-body: false
+# StpUtil.getLoginIdAsString() 使用这种Sa-Token封装的方法必须携带token
+sa-token:
+  # token名称 [同时也是cookie名称，推荐使用]
+  token-name: Authorization
+  # token 前缀
+  token-prefix: Bearer
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: tik
+  # token有效期，单位s 默认30天, -1代表永不过期（10800[3小时]后端生成的 token，即使用户一直操作，在 30 天后一定会过期，要求用户重新登录）
+  timeout: 10800
+  # token 最低活跃频率[单位：秒]，如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: 3600
+  # 自动续签，指定时间内有操作，则会自动续签
+  auto-renew: true
+  # 是否尝试从cookie里读取token
+  is-read-cookie: false
+  # 是否尝试从header里读取token
+  is-read-header: true
+  # 是否允许同一账号多地同时登录[为 true 时允许一起登录, 为 false 时新登录挤掉旧登录]
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 token[为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token]
+  is-share: false
+  # 是否在初始化配置时打印版本字符画
+  is-print: true
+  # 是否输出操作日志
+  is-log: true
+
+

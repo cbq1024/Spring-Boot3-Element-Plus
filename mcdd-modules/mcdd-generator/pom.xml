@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>dev.mcdd</groupId>
+        <artifactId>Spring-Boot3-Element-Plus</artifactId>
+        <version>${revision}</version>
+        <!-- 不添加relativePath，Maven 会默认去上级目录查找父项目的pom.xml，这里上级目录不是父pom.xml文件，所以需要添加此标签 -->
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>mcdd-generator</artifactId>
+
+    <dependencies>
+        <!-- 全局公共模块 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- Freemarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+        <!-- SpringBoot Web 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- MyBatisPlus模块 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-mybatis-plus</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
+</project>

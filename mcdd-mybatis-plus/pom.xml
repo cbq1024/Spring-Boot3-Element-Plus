@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>dev.mcdd</groupId>
+        <artifactId>Spring-Boot3-Element-Plus</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>mcdd-mybatis-plus</artifactId>
+
+    <dependencies>
+        <!-- Mapper针对pojo,bo,vo,dto等依赖进来 -->
+        <dependency>
+            <groupId>dev.mcdd</groupId>
+            <artifactId>mcdd-model</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- MySQL数据库连接依赖[只有接口工程需要] -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- Mapper会用到MyBatisPlus的类 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        </dependency>
+        <!-- p6spy SQL打印 -->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 注意：此日志配置将info、warn、error日志合并一个输出，按照天划分，大于100MB后面日志名字最后+1 -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>koi-logback</contextName>
+
+    <property name="KOI_ADMIN_LOGS" value="./logs"/>
+
+    <!-- 彩色日志 -->
+    <conversionRule conversionWord="clr" class="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex" class="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx" class="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    <!-- 彩色日志格式 [%-5p] %d{yyyy-MM-dd HH:mm:ss,SSS} method:%l%n%m%n  -->
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr([TraceId: [%boldCyan(%X{traceId})]]%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <!-- 控制台 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="combinedFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+        </filter>
+        <!-- 日志存储路径 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${KOI_ADMIN_LOGS}/%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <!-- 日志很多每天，需要拆分使用下方这个 -->
+        <!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+        <!--             <fileNamePattern>${KOI_ADMIN_LOGS}/%d{yyyy-MM-dd}.%i.log</fileNamePattern>-->
+        <!--            <maxHistory>30</maxHistory>-->
+        <!--            &lt;!&ndash; 单个日志文件最大100M &ndash;&gt;-->
+        <!--            <maxFileSize>100MB</maxFileSize>-->
+        <!--        </rollingPolicy>-->
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>[[TraceId: %X{traceId}]%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level %logger{36} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="dev">
+        <root level="info">
+            <appender-ref ref="stdout"/>
+            <appender-ref ref="combinedFile"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <root level="info">
+            <appender-ref ref="combinedFile"/>
+        </root>
+    </springProfile>
+
+</configuration>
